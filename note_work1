@@ -41,21 +41,26 @@ Xml属性：
 
 ----自定义view
     1.想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
-    2.format属性: reference  引用      @drawable/图片ID
+    2.xml： res/values/attrs_xxxx.xml 
+                <res...
+                    <declare-styleable name="XXXX">
+                        <attr name="" format="" />
+                    </dec...
+    3.format属性: reference  引用      @drawable/图片ID
                   string     字符串     
-		  color      颜色      #00FF00
-		  dimension  尺寸值    25dp/px
-		  integer    整形
-		  float      浮点型    102.2
-		  fraction   百分比    50%
+		          color      颜色      #00FF00
+		          dimension  尺寸值    25dp/px
+		          integer    整形
+		          float      浮点型    102.2
+		          fraction   百分比    50%
 
-		  <attr name="orientation">    枚举  
+		          <attr name="orientation">    枚举  
                           <enum name="horizontal" value="0" />
                           <enum name="vertical" value="1" />
                   </attr>    
-		  <attr name="windowSoftInputMode">   位或运算
-		      <flag name = "stateUnspecified" value = "0" />
-		      <flag name = "stateUnchanged" value = "1" />
+		          <attr name="windowSoftInputMode">   位或运算
+		              <flag name = "stateUnspecified" value = "0" />
+		              <flag name = "stateUnchanged" value = "1" />
 		  
 		  
 
