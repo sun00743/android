@@ -88,6 +88,43 @@ metrics.heightplex
 
 
 
+public Rect getFramingRectDp() {
+		Point screenResolution = configManager.getScreenResolution();
+		if (framingRect == null) {
+			if (camera == null) {
+				return null;
+			}
+			// int width = screenResolution.x * 3 / 4;
+			// if (width < MIN_FRAME_WIDTH) {
+			// width = MIN_FRAME_WIDTH;
+			// } else if (width > MAX_FRAME_WIDTH) {
+			// width = MAX_FRAME_WIDTH;
+			// }
+			// int height = screenResolution.y * 3 / 4;
+			// if (height < MIN_FRAME_HEIGHT) {
+			// height = MIN_FRAME_HEIGHT;
+			// } else if (height > MAX_FRAME_HEIGHT) {
+			// height = MAX_FRAME_HEIGHT;
+			// }
+			// px 转换成 dp 进行计算
+			int w = (int) (screenResolution.x / DensityUtils.getDsy(context));
+			int h = (int) (screenResolution.y / DensityUtils.getDsy(context));
+			int rw = 200;
+			int rh = 190;
+			int leftOffset = (w - rw) / 2;
+			int topOffset = (h - rh) / 2;
+
+			//绘制扫描正方形时转换为px
+			framingRect = new Rect(DensityUtils.dp2px(context, leftOffset),
+					DensityUtils.dp2px(context, topOffset), 
+					DensityUtils.dp2px(context, leftOffset + rw),
+					DensityUtils.dp2px(context, topOffset + rh));
+			Log.d(TAG, "Calculated framing rect: " + framingRect);
+		}
+		return framingRect;
+	}
+
+
 
 
 
