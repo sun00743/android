@@ -31,13 +31,12 @@ metrics.heightplex
 </selector>
 
 ----girdview
-Xml属性：
-    android:columnWidth         设置列的宽度。   关联的方法为：setColumnWidth(int)
-    android:horizontalSpacing   两列之间的间距。 关联方法：setHorizontalSpacing(int)
-    android:numColumns          列数。           关联方法：setNumColumns(int)
-    android:stretchMode         缩放模式。       关联方法：setStretchMode(int)
-    android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
-
+    Xml属性：
+        android:columnWidth         设置列的宽度。   关联的方法为：setColumnWidth(int)
+        android:horizontalSpacing   两列之间的间距。 关联方法：setHorizontalSpacing(int)
+        android:numColumns          列数。           关联方法：setNumColumns(int)
+        android:stretchMode         缩放模式。       关联方法：setStretchMode(int)
+        android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
 
 ----自定义view
     1.想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
@@ -61,13 +60,28 @@ Xml属性：
                   <attr name="windowSoftInputMode">   位或运算
                       <flag name = "stateUnspecified" value = "0" />
                       <flag name = "stateUnchanged" value = "1" />
-	4.从xml资源中获取属性：
-	    TypeArray array = context.obtainStyledAttributes(attrs, R.styleable.XXXX);
-		  
-		  
-
-
-
+    4.从xml资源中获取属性：
+        TypeArray array = context.obtainStyledAttributes(attrs, R.styleable.XXXX);
+        
+----属性动画
+    插值器
+    1）AccelerateDecelerateInterpolator：先加速再减速。
+    2）AccelerateInterpolator：一直加速。
+    3）AnticipateInterpolator：先往后一下，再嗖的一声一往无前。
+    4）AnticipateOvershootInterpolator：先往后一下，再一直往前超过终点，再往回收一下。
+    5）BounceInterpolator：最后像个小球弹几下。
+    6）CycleInterpolator：重复几次，感觉就是环形进度条那种，具体我还没试过。
+    7）DecelerateInterpolator：一直减速。
+    8）LinearInterpolator：线性，这个就是我们上面讲到的很均匀的了。
+    9）OvershootInterpolator：到了终点之后，超过一点，再往回走。有个参数可以定义，超过的力度。
+    
+    valueAnimator中ofobject方法，要实现TypeEvaluator，复写evaluate方法
+        fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue）  
+     
+----bezier曲线
+    B(t) = P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*t^2*(1-t) + P3*t^3
+    
+----
 
  
 
