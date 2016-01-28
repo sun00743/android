@@ -1,22 +1,21 @@
 ----popWindow
-popWindow.showAsDropDown(view) 在view的下方展开popwindow;
-popWindow可以设置宽度
+    popWindow.showAsDropDown(view) 在view的下方展开popwindow;
+    popWindow可以设置宽度
 
 ----List 转 数组
-String[] packageArr = (String[])packageList.toArray(new String[packageList.size()]);
-
-String[] array = (String[])List.toArray(new String[List.size()]);
+    String[] packageArr = (String[])packageList.toArray(new String[packageList.size()]);
+    String[] array = (String[])List.toArray(new String[List.size()]);
 
 ----设置activity没有标题
-requestWindowFeature(Window.FEATURE_NO_TITLE);
+    requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 ----设备屏幕密度
-density = px/dp;
-获取屏幕分辨率利用 DisplayMetrics
-DisplayMetrics metrics = new DisplayMetrics();
-getWindowManager.getDefultDisplay.getMetrics;
-metrics.widthplex
-metrics.heightplex
+    density = px/dp;
+    获取屏幕分辨率利用 DisplayMetrics
+    DisplayMetrics metrics = new DisplayMetrics();
+    getWindowManager.getDefultDisplay.getMetrics;
+    metrics.widthplex
+    metrics.heightplex
 
 ----控件设置xml背景属性
 <selector>
@@ -92,8 +91,24 @@ metrics.heightplex
         (3) public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
     
     Binder：
-    
-    
+        
+        关于binder死亡代理：
+            客户端声明DeathRecipient对象
+            private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
+                @override
+                public void binderDied(){
+                    if(mBookManager(客户端创建的aidl对象) == null){
+                        return;
+                    }
+                    mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
+                    mBookManager = null;
+                    //重新绑定service
+                    binderservicer(intent, connection, Context.BIND_AUTO_CREATE);
+                }
+            }
+            为binder设置死亡代理
+            mService = IMessageBoxManager.Stub.asInterfacce(binder);
+            binder.linkToDeath(mDeathRecipient, 0);
     
 
 
