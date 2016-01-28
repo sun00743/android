@@ -81,9 +81,20 @@ metrics.heightplex
 ----bezier曲线
     B(t) = P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*t^2*(1-t) + P3*t^3
     
-----
-
- 
+----IPC 进程间通讯
+    1. serializable：
+        (1) 传递的对象类要实现serialiable接口
+        (2) 网络传输并不安全
+        (3) objectOutputstream / objectInputStream  
+    2. parcelable：
+        (1) writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
+        (2) private User(Parcel in) 传递CREATOR加载器
+        (3) public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
+    
+    Binder：
+    
+    
+    
 
 
 
