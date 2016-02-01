@@ -113,10 +113,14 @@
     
     Messenger：
         底层AIDL 
+        
     
     
 
 ----ListView : 
+    索引接口：
+        SectionIndex index = (SectionIndex)adapter;    
+        
     onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
     
 
