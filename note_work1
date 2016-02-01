@@ -86,6 +86,7 @@
         (2) 网络传输并不安全
         (3) objectOutputstream / objectInputStream  
     2. parcelable：
+        通过intent和binder传递
         (1) writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
         (2) private User(Parcel in) 传递CREATOR加载器
         (3) public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
@@ -110,8 +111,14 @@
             mService = IMessageBoxManager.Stub.asInterfacce(binder);
             binder.linkToDeath(mDeathRecipient, 0);
     
+    Messenger：
+        底层AIDL 
+    
+    
 
-
+----ListView : 
+    onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
+    
 
 
 
