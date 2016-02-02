@@ -111,10 +111,15 @@
             mService = IMessageBoxManager.Stub.asInterfacce(binder);
             binder.linkToDeath(mDeathRecipient, 0);
     
-    Messenger：
+    Messenger(单应用)：
         底层AIDL 
-        
-    
+        1. 创建一个handler(处理逻辑业务)来创建messenger对象：private final Messenger mess = new Messenger(new handler);
+        2. onbind方法里 mess.getbinder(); 来绑定
+        客户端：
+        1. 创建serivceconnection 和messenger ，创建一个message.obtain(handler h,int what)通过messenger.send来传递bundle对象
+        public void onServiceConnected(ComponentName name, IBinder service) {
+			mService = new Messenger(service);
+		2. 创建intent 和绑定service	bindService(intent, conn, Context.BIND_AUTO_CREATE);
     
 
 ----ListView : 
