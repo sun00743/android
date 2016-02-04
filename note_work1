@@ -113,13 +113,21 @@
     
     Messenger(单应用)：
         底层AIDL 
-        1. 创建一个handler(处理逻辑业务)来创建messenger对象：private final Messenger mess = new Messenger(new handler);
+        (1) 服务端:
+        1. 创建一个handler(处理逻辑业务)来创建messenger对象：private final Messenger mess = new Messenger(MessengerHandler);
+        	private static class MessengerHandler extend Handler(){.....} 
         2. onbind方法里 mess.getbinder(); 来绑定
-        客户端：
+        3. 回复信息：handler中通过 msg.replyTo 方法来获取messenger对象 (messenger client = msg.replyTo;)
+        创建一个message.obtain(handler h,int what);通过messenger.send; (client.send(replymessage);)来传递bundle对象
+        (2) 客户端：
         1. 创建serivceconnection 和messenger ，创建一个message.obtain(handler h,int what)通过messenger.send来传递bundle对象
         public void onServiceConnected(ComponentName name, IBinder service) {
 			mService = new Messenger(service);
 		2. 创建intent 和绑定service	bindService(intent, conn, Context.BIND_AUTO_CREATE);
+		3. 接收服务器回复信息；也需要创建接受消息的handler和messenger对象：同服务端，在handler中msg.getData().get...(key);
+	    接受信息。
+	    4. 吧接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端
+		
     
 
 ----ListView : 
@@ -128,7 +136,7 @@
         
     onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
     
-
+	
 
 
 
