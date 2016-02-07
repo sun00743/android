@@ -127,8 +127,18 @@
 		3. 接收服务器回复信息；也需要创建接受消息的handler和messenger对象：同服务端，在handler中msg.getData().get...(key);
 	    接受信息。
 	    4. 吧接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端
-		
-    
+	AIDL: 
+		AIDL注意： 
+			实现parcelable的类要在AIDL文件包中
+		AIDL支持数据类型:
+			1. 基本数据类型
+			2. String,charsquence
+			3. List : Arraylist, ; map: hashmap
+    		4. 实现parcelable接口的类和对象
+    		5. AIDL接口
+    	Service: 
+    		1. 通过AIDL.stub()方法创建binder对象,在其中实现AIDL中的接口方法
+    		2. onBinder方法中返回这个这个binder对象
 
 ----ListView : 
     索引接口：
