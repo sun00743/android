@@ -129,7 +129,7 @@
 	    4. 吧接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端
 	AIDL: 
 		AIDL注意： 
-			实现parcelable的类要在AIDL文件包中
+			实现parcelable的类要在AIDL文件包中(在ＡＳ中这个类要放在gen目录下与aidl文件同一个包中)
 		AIDL支持数据类型:
 			1. 基本数据类型
 			2. String,charsquence
