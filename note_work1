@@ -147,6 +147,12 @@
     2.onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
     3.descendantFocusability属性，三种模式可分配焦点问题
     
+    
+----CopyOrWriteArrayList:
+	支持并发读写, 并不是继承自ArrayList, Binder会按照List的规范去访问最后生成一个ArrayList,
+----RemoteCallBackList:
+	系统专门用于删除跨进程 Listener（接口？）的接口
+    
 	
 
 
