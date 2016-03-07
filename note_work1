@@ -92,7 +92,6 @@
         (3) public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
     
     Binder：
-        
         关于binder死亡代理：
             客户端声明DeathRecipient对象
             private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
