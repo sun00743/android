@@ -130,6 +130,7 @@
 	AIDL: 
 		AIDL注意： 
 			实现parcelable的类要在AIDL文件包中(在ＡＳ中这个类要放在gen目录下与aidl文件同一个包中)
+			相互间传递参数要在非UI线程中操作
 		AIDL支持数据类型:
 			1. 基本数据类型
 			2. String,charsquence
@@ -139,6 +140,10 @@
     	Service: 
     		1. 通过AIDL.stub()方法创建binder对象,在其中实现AIDL中的接口方法
     		2. onBinder方法中返回这个这个binder对象
+    	Client:
+    		1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binder)实例化连接
+    		2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务。
+    		3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
 
 ----ListView : 
     1.索引接口：
