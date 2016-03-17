@@ -55,6 +55,7 @@
     metrics.widthplex
     metrics.heightplex
 ----控件设置xml背景属性
+
 	<selector  ...>
 	<item name = "state:pressed = "true"  ?">
     	<shape ..... >
