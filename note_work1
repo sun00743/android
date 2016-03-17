@@ -1,3 +1,39 @@
+----mageView 转 Bitmap
+Bitmap image = ((BitmapDrawable)imageView.getDrawable()).getBitmap();  
+
+----获得根视图
+getWindow().getDecorView().findviewById(android.R.id.content);
+getWindow().getDecorView()就是根视图了，当然用Activity.getWindow.getDecorView()来表达意思更为明确
+
+----内存溢出
+Android 默认给每个APP只分配16M的内存
+
+thread 不销毁也会内存泄露
+bitmap 用完recyle掉
+static 修饰的context，尽量用弱引用context
+Cursor 用完也要close掉，不然会内存泄露
+
+----java 中的引用
+    强引用 垃圾回收器不会回收，java 默认引用都是强引用
+    软引用 SoftReference   在内存不够时，垃圾回收器会考虑回收
+    弱引用 WeakReference   在内存不够时，垃圾回收器会优先回收
+    虚引用 PhantomReference   在内存不够时，垃圾回收器会最优先回收
+	LruCache<K,V> (least recentlly use 最少最近引用)
+		一个hashMap       
+
+----尺寸适配
+    dp = px/设备密度
+    values -> dimens.xml / values-1280*720 -> dimens.xml 分别设置不同的dp 
+
+----获得视图尺寸
+	int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(1000, View.MeasureSpec.AT_MOST);
+    //传递了size，mode 两个参数
+    size：需要测量的视图的大小
+    moed：测量的模式
+        UNSPECIFIED：没有任何约束，孩子视图可以有任何想要的大小
+        EXACTLTY：有一个确切的大小
+		AT_MOST：孩子视图可以达到的最大值
+
 ----popWindow
     popWindow.showAsDropDown(view) 在view的下方展开popwindow;
     popWindow可以设置宽度
