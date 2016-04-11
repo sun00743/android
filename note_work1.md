@@ -184,6 +184,21 @@
     		1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binder)实例化连接
     		2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务。
     		3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
+    6. ContentProvider:
+    	Manifest:
+			1. 声明provider的authority，例如：
+				android:authorities="com.contentprovider.demo.book.provider"
+			2. 为了安全起见，声明provider的permission（别忘了在自己的应用的Manifest文件中指定permission）。 例如：
+				<uses-permission android:name="com.demo.PROVIDER"/>
+				android:permission="com.demo.PROVIDER"
+			3. 为provider新开一个进程。
+            	android:process=":provider"
+    	provider:
+			1. 
+		DbHelper:
+    	
+		Activity:
+		
 ----ListView : 
 
     1.索引接口：
