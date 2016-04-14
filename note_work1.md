@@ -202,7 +202,14 @@
 			3. i d q u 注意线程同步
 			4. 
 		DbHelper:
-    	
+    		1. 
+    		private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
+    			"main " +                       // Table's name
+    			"(" +                           // The columns in the table
+    			" _ID INTEGER PRIMARY KEY, " +
+    			" WORD TEXT"
+    			" FREQUENCY INTEGER " +
+	 			" LOCALE TEXT )";
 		Activity:
  			1. Uri: uri.parse("content://authority/path")
 			2. contentResolver.query(uri,....);   
