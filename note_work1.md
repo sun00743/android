@@ -195,9 +195,17 @@
             	android:process=":provider"
     	provider:
 			1. 
+			2. UriMatcher 
+				UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+				matcher.add(authority(com.con......), path("book"), code(0));
+				用来将path和code进行关联
+			3. i d q u 注意线程同步
+			4. 
 		DbHelper:
     	
 		Activity:
+ 			1. Uri: uri.parse("content://authority/path")
+			2. contentResolver.query(uri,....);   
 		
 ----ListView : 
 
