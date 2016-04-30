@@ -116,6 +116,8 @@
 ----bezier曲线
 
     B(t) = P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*t^2*(1-t) + P3*t^3
+    [具体图以及typeEvaluator示例](http://user.qzone.qq.com/327400482/2)
+    具体：<http://user.qzone.qq.com/327400482/2>
 ----IPC 进程间通讯
 
     1. serializable：
