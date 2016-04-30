@@ -98,40 +98,34 @@
                       <flag name = "stateUnchanged" value = "1" />
     4.从xml资源中获取属性：
         TypeArray array = context.obtainStyledAttributes(attrs, R.styleable.XXXX);
-----属性动画
+##属性动画    
+####插值器
+1. AccelerateDecelerateInterpolator：先加速再减速。
+2. AccelerateInterpolator：一直加速。
+3. AnticipateInterpolator：先往后一下，再嗖的一声一往无前。
+4. AnticipateOvershootInterpolator：先往后一下，再一直往前超过终点，再往回收一下。
+5. BounceInterpolator：最后像个小球弹几下。
+6. CycleInterpolator：重复几次，感觉就是环形进度条那种，具体我还没试过。
+7. DecelerateInterpolator：一直减速。
+8. LinearInterpolator：线性，这个就是我们上面讲到的很均匀的了。
+9. OvershootInterpolator：到了终点之后，超过一点，再往回走。有个参数可以定义，超过的力度。
 
-    插值器
-    1）AccelerateDecelerateInterpolator：先加速再减速。
-    2）AccelerateInterpolator：一直加速。
-    3）AnticipateInterpolator：先往后一下，再嗖的一声一往无前。
-    4）AnticipateOvershootInterpolator：先往后一下，再一直往前超过终点，再往回收一下。
-    5）BounceInterpolator：最后像个小球弹几下。
-    6）CycleInterpolator：重复几次，感觉就是环形进度条那种，具体我还没试过。
-    7）DecelerateInterpolator：一直减速。
-    8）LinearInterpolator：线性，这个就是我们上面讲到的很均匀的了。
-    9）OvershootInterpolator：到了终点之后，超过一点，再往回走。有个参数可以定义，超过的力度。
-    
-    valueAnimator中ofobject方法，要实现TypeEvaluator，复写evaluate方法
-        fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue）  
-----bezier曲线
-
-    B(t) = P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*t^2*(1-t) + P3*t^3
-    [具体图以及typeEvaluator示例](http://user.qzone.qq.com/327400482/2)
-    具体：<http://user.qzone.qq.com/327400482/2>
-----IPC 进程间通讯
-
-    1. serializable：
-        (1) 传递的对象类要实现serialiable接口
-        (2) 网络传输并不安全
-        (3) objectOutputstream / objectInputStream  
-        
-    2. parcelable：
+valueAnimator中ofobject方法，要实现TypeEvaluator，复写evaluate方法</br>
+fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)   
+##bezier曲线
+&nbsp;&nbsp;B(t) = P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*t^2*(1-t) + P3*t^3   
+&nbsp;&nbsp;[具体图以及typeEvaluator示例](http://user.qzone.qq.com/327400482/2)   		
+##IPC 进程间通讯
+####serializable：
+1. 传递的对象类要实现serialiable接口
+2. 网络传输并不安全
+3. objectOutputstream / objectInputStream  
+####parcelable：
         通过intent和binder传递
         (1) writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
         (2) private User(Parcel in) 传递CREATOR加载器
         (3) public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
-    
-    3. Binder：
+#### Binder：
         关于binder死亡代理：
             客户端声明DeathRecipient对象
             private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
@@ -149,8 +143,7 @@
             为binder设置死亡代理
             mService = IMessageBoxManager.Stub.asInterfacce(binder);
             binder.linkToDeath(mDeathRecipient, 0);
-    
-    4. Messenger(单应用)：
+####Messenger(单应用)：
     
         底层AIDL 
         
@@ -169,7 +162,7 @@
 		3. 接收服务器回复信息；也需要创建接受消息的handler和messenger对象：同服务端，在handler中msg.getData().get...(key);
 	    接受信息。
 	    4. 吧接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端
-	5. AIDL: 
+####AIDL: 
 		AIDL注意： 
 			实现parcelable的类要在AIDL文件包中(在ＡＳ中这个类要放在gen目录下与aidl文件同一个包中)
 			相互间传递参数要在非UI线程中操作
@@ -186,7 +179,7 @@
     		1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binder)实例化连接
     		2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务。
     		3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
-    6. ContentProvider:
+####ContentProvider:
     	Manifest:
 			1. 声明provider的authority，例如：
 				android:authorities="com.contentprovider.demo.book.provider"
@@ -216,7 +209,7 @@
  			1. Uri: uri.parse("content://authority/path")
 			2. contentResolver.query(uri,....);   
 		
-----ListView : 
+##ListView : 
 
     1.索引接口：
         SectionIndex index = (SectionIndex)adapter;    
