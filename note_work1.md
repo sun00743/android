@@ -125,24 +125,6 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
         (1) writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
         (2) private User(Parcel in) 传递CREATOR加载器
         (3) public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
-#### Binder：
-        关于binder死亡代理：
-            客户端声明DeathRecipient对象
-            private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
-                @override
-                public void binderDied(){
-                    if(mBookManager(客户端创建的aidl对象) == null){
-                        return;
-                    }
-                    mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
-                    mBookManager = null;
-                    //重新绑定service
-                    binderservicer(intent, connection, Context.BIND_AUTO_CREATE);
-                }
-            }
-            为binder设置死亡代理
-            mService = IMessageBoxManager.Stub.asInterfacce(binder);
-            binder.linkToDeath(mDeathRecipient, 0);
 ####Messenger(单应用)：
     
         底层AIDL 
@@ -179,6 +161,34 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
     		1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binder)实例化连接
     		2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务。
     		3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
+#### Binder：
+        关于binder死亡代理：
+            客户端声明DeathRecipient对象
+            private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
+                @override
+                public void binderDied(){
+                    if(mBookManager(客户端创建的aidl对象) == null){
+                        return;
+                    }
+                    mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
+                    mBookManager = null;
+                    //重新绑定service
+                    binderservicer(intent, connection, Context.BIND_AUTO_CREATE);
+                }
+            }
+            在客户端绑定远程服务后(在serviceConnection中)为binder设置死亡代理
+            mBookManager = IMessageBoxManager.Stub.asInterfacce(IBinder);
+            IBinder.linkToDeath(mDeathRecipient, 0);
+####Binder链接池:
+#####Service:
+1. 创建需要的aidl接口，并完成实现类。
+2. 创建binder连接池的aidl接口Ibinderpool。
+3. 创建bindpoolService，返回Ibinderpool的实现bindpoolImp
+#####Client:
+(线程中，在bindpool中设置死亡代理)
+1. 创建binder连接池bindpool来绑定bindpoolService，创建querybinder方法来提供对应的binder
+2. MainActivity利用querybinder获取到对应的binder，通过aidl实现类的asInstance(Ibinder)方法实例化链接
+3. 然后AIDL对象就可以调用方法完成通信。
 ####ContentProvider:
     	Manifest:
 			1. 声明provider的authority，例如：
