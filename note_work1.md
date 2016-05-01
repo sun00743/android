@@ -183,12 +183,14 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 #####Service:
 1. 创建需要的aidl接口，并完成实现类。
 2. 创建binder连接池的aidl接口Ibinderpool。
-3. 创建bindpoolService，返回Ibinderpool的实现bindpoolImp
-#####Client:
-(线程中，在bindpool中设置死亡代理)
-1. 创建binder连接池bindpool来绑定bindpoolService，创建querybinder方法来提供对应的binder
-2. MainActivity利用querybinder获取到对应的binder，通过aidl实现类的asInstance(Ibinder)方法实例化链接
-3. 然后AIDL对象就可以调用方法完成通信。
+3. 创建bindpoolService，返回Ibinderpool的实现bindpoolImp。  
+
+#####Client:  
+(线程中，在bindpool中设置死亡代理)  
+1. 创建binder连接池bindpool来绑定bindpoolService，创建querybinder方法来提供对应的binder。  
+2. MainActivity利用querybinder获取到对应的binder，通过aidl实现类的asInstance(Ibinder)方法实例化链接  
+3. 然后AIDL对象就可以调用方法完成通信。  
+
 ####ContentProvider:
     	Manifest:
 			1. 声明provider的authority，例如：
