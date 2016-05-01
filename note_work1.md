@@ -117,70 +117,77 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 &nbsp;&nbsp;[具体图以及typeEvaluator示例](http://user.qzone.qq.com/327400482/2)   		
 ##IPC 进程间通讯
 ####serializable：
-1. 传递的对象类要实现serialiable接口
-2. 网络传输并不安全
-3. objectOutputstream / objectInputStream  
+1. 传递的对象类要实现serialiable接口。
+2. 网络传输并不安全。
+3. objectOutputstream / objectInputStream。
+
 ####parcelable：
-        通过intent和binder传递
-        (1) writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
-        (2) private User(Parcel in) 传递CREATOR加载器
-        (3) public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
+通过intent和binder传递
+1. writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
+2. private User(Parcel in) 传递CREATOR加载器
+3. public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
+
 ####Messenger(单应用)：
+底层AIDL 
+#####服务端:
+1. 创建一个handler(处理逻辑业务)来创建messenger对象：
+
+		private final Messenger mess = new Messenger(MessengerHandler);
+    	private static class MessengerHandler extend Handler(){.....} 
+2. onbind方法里 mess.getbinder(); 来绑定
+3. 回复信息：handler中通过 msg.replyTo 方法来获取messenger对象(messenger client = msg.replyTo;)    创建一个message.obtain(handler h,int what);    通过messenger.send; (client.send(replymessage);)来传递bundle对象
+        
+#####客户端：
+1. 创建serivceconnection 和messenger ，创建一个message.obtain(handler h,int what)通过messenger.send来传递bundle对象
     
-        底层AIDL 
-        
-        (1) 服务端:
-        1. 创建一个handler(处理逻辑业务)来创建messenger对象：private final Messenger mess = new Messenger(MessengerHandler);
-        	private static class MessengerHandler extend Handler(){.....} 
-        2. onbind方法里 mess.getbinder(); 来绑定
-        3. 回复信息：handler中通过 msg.replyTo 方法来获取messenger对象 (messenger client = msg.replyTo;)
-        创建一个message.obtain(handler h,int what);通过messenger.send; (client.send(replymessage);)来传递bundle对象
-        
-        (2) 客户端：
-        1. 创建serivceconnection 和messenger ，创建一个message.obtain(handler h,int what)通过messenger.send来传递bundle对象
-        public void onServiceConnected(ComponentName name, IBinder service) {
-			mService = new Messenger(service);
-		2. 创建intent 和绑定service	bindService(intent, conn, Context.BIND_AUTO_CREATE);
-		3. 接收服务器回复信息；也需要创建接受消息的handler和messenger对象：同服务端，在handler中msg.getData().get...(key);
-	    接受信息。
-	    4. 吧接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端
+	public void onServiceConnected(ComponentName name, IBinder service) {
+		mService = new Messenger(service);
+2. 创建intent 和绑定service	bindService(intent, conn, Context.BIND_AUTO_CREATE);
+3. 接收服务器回复信息；也需要创建接受消息的handler和messenger对象：同服务端，在handler中msg.getData().get...(key);接受信息。
+4. 把接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端
+
 ####AIDL: 
-		AIDL注意： 
-			实现parcelable的类要在AIDL文件包中(在ＡＳ中这个类要放在gen目录下与aidl文件同一个包中)
-			相互间传递参数要在非UI线程中操作
-		AIDL支持数据类型:
-			1. 基本数据类型
-			2. String,charsquence
-			3. List : Arraylist, ; map: hashmap
-    		4. 实现parcelable接口的类和对象
-    		5. AIDL接口
-    	Service: 
-    		1. 通过AIDL.stub()方法创建binder对象,在其中实现AIDL中的接口方法
-    		2. onBinder方法中返回这个这个binder对象
-    	Client:
-    		1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binder)实例化连接
-    		2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务。
-    		3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
+#####AIDL注意： 
+实现parcelable的类要在AIDL文件包中(在ＡＳ中这个类要放在gen目录下与aidl文件同一个包中)
+相互间传递参数要在非UI线程中操作
+#####AIDL支持数据类型:
+1. 基本数据类型
+2. String,charsquence
+3. List : Arraylist, ; map: hashmap
+4. 实现parcelable接口的类和对象
+5. AIDL接口
+
+#####Service: 
+1. 通过AIDL.stub()方法创建binder对象,在其中实现AIDL中的接口方法
+2. onBinder方法中返回这个这个binder对象
+
+#####Client:
+1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binder)实例化连接
+2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务。
+3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
+
 #### Binder：
-        关于binder死亡代理：
-            客户端声明DeathRecipient对象
-            private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
-                @override
-                public void binderDied(){
-                    if(mBookManager(客户端创建的aidl对象) == null){
-                        return;
-                    }
-                    mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
-                    mBookManager = null;
-                    //重新绑定service
-                    binderservicer(intent, connection, Context.BIND_AUTO_CREATE);
-                }
+#####关于binder死亡代理：
+客户端声明DeathRecipient对象  
+    
+    private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
+        @override
+        public void binderDied(){
+            if(mBookManager(客户端创建的aidl对象) == null){
+                return;
             }
-            在客户端绑定远程服务后(在serviceConnection中)为binder设置死亡代理
-            mBookManager = IMessageBoxManager.Stub.asInterfacce(IBinder);
-            IBinder.linkToDeath(mDeathRecipient, 0);
+            mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
+            mBookManager = null;
+            //重新绑定service
+            binderservicer(intent, connection, Context.BIND_AUTO_CREATE);
+        }
+    }
+在客户端绑定远程服务后(在serviceConnection中)为binder设置死亡代理  
+	
+	mBookManager = IMessageBoxManager.Stub.asInterfacce(IBinder);
+    IBinder.linkToDeath(mDeathRecipient, 0);
 ####Binder链接池:
-#####Service:
+#####Service:  
 1. 创建需要的aidl接口，并完成实现类。
 2. 创建binder连接池的aidl接口Ibinderpool。
 3. 创建bindpoolService，返回Ibinderpool的实现bindpoolImp。  
