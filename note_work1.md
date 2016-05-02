@@ -199,25 +199,28 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 3. 然后AIDL对象就可以调用方法完成通信。  
 
 ####ContentProvider:
-    	Manifest:
-			1. 声明provider的authority，例如：
-				android:authorities="com.contentprovider.demo.book.provider"
-			2. 为了安全起见，声明provider的permission（别忘了在自己的应用的Manifest文件中指定permission）。 例如：
-				<uses-permission android:name="com.demo.PROVIDER"/>
-				android:permission="com.demo.PROVIDER"
-			3. 为provider新开一个进程。
-            	android:process=":provider"
-    	provider:
-			1. 
-			2. UriMatcher 
-				UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-				matcher.add(authority(com.con......), path("book"), code(0));
-				用来将path和code进行关联
-			3. i d q u 注意线程同步
-			4. 
-		DbHelper:
-    		1. 
-    		private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
+#####Manifest:
+1. 声明provider的authority，例如：
+
+		android:authorities="com.contentprovider.demo.book.provider"
+2. 为了安全起见，声明provider的permission（别忘了在自己的应用的Manifest文件中指定permission）。 例如：
+		
+		<uses-permission android:name="com.demo.PROVIDER"/>
+		android:permission="com.demo.PROVIDER"
+3. 为provider新开一个进程。
+        android:process=":provider"
+
+#####provider:
+1. 
+2. UriMatcher 用来将path和code进行关联
+
+		UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+		matcher.add(authority(com.con......), path("book"), code(0));
+3. i d q u 注意线程同步
+4. 
+
+#####DbHelper:
+    	private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
     			"main " +                       // Table's name
     			"(" +                           // The columns in the table
     			" _ID INTEGER PRIMARY KEY, " +
@@ -227,7 +230,6 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 		Activity:
  			1. Uri: uri.parse("content://authority/path")
 			2. contentResolver.query(uri,....);   
-		
 ##ListView : 
 
     1.索引接口：
