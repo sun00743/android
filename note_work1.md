@@ -139,7 +139,7 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 		private final Messenger mess = new Messenger(MessengerHandler);
     	private static class MessengerHandler extend Handler(){.....} 
 2. onbind方法里 mess.getbinder(); 来绑定
-3. 回复信息：handler中通过 msg.replyTo 方法来获取messenger对象(messenger client = msg.replyTo;)    创建一个message.obtain(handler h,int what);    通过messenger.send; (client.send(replymessage);)来传递bundle对象
+3. 回复信息：handler中通过 msg.replyTo 方法来获取messenger对象(messenger client = msg.replyTo;) <br>创建一个message.obtain(handler h,int what);<br>通过messenger.send; (client.send(replymessage);)来传递bundle对象
         
 #####客户端：
 1. 创建serivceconnection 和messenger ，创建一个message.obtain(handler h,int what)通过messenger.send来传递bundle对象
@@ -222,7 +222,11 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 		matcher.add(authority(com.con......), path("book"), code(0));
 3. i d q u 注意线程同步
 4. 
-
+####其他注意：
+#####CopyOrWriteArrayList:<br>
+支持并发读写, 并不是继承自ArrayList, Binder会按照List的规范去访问最后生成一个ArrayList,
+#####RemoteCallBackList:<br>
+系统专门用于删除跨进程 Listener（接口？）的接口
 #####DbHelper:
     	private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
     			"main " +                       // Table's name
@@ -235,19 +239,12 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
  			1. Uri: uri.parse("content://authority/path")
 			2. contentResolver.query(uri,....);   
 ##ListView : 
+1.索引接口：
 
-    1.索引接口：
         SectionIndex index = (SectionIndex)adapter;    
-    2.onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
-    3.descendantFocusability属性，三种模式可分配焦点问题
+2.onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
+3.descendantFocusability属性，三种模式可分配焦点问题
     
-    
-----CopyOrWriteArrayList:
-
-	支持并发读写, 并不是继承自ArrayList, Binder会按照List的规范去访问最后生成一个ArrayList,
-----RemoteCallBackList:
-
-	系统专门用于删除跨进程 Listener（接口？）的接口
     
 	
 
