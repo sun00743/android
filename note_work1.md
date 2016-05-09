@@ -74,15 +74,17 @@
         android:numColumns          列数。           关联方法：setNumColumns(int)
         android:stretchMode         缩放模式。       关联方法：setStretchMode(int)
         android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
-----自定义view
+##自定义view
+1. 想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
+2. xml属性资源文件： res/values/attrs_xxxx.xml 
 
-    1.想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
-    2.xml： res/values/attrs_xxxx.xml 
                 <res...
                     <declare-styleable name="XXXX">
                         <attr name="" format="" />
-                    </dec...
-    3.format属性: reference  引用      @drawable/图片ID
+                </dec...
+3. format属性:
+    
+    			  reference  引用      @drawable/图片ID
                   string     字符串    
                   color      颜色      #00FF00
                   dimension  尺寸值    25dp/px 
@@ -96,8 +98,10 @@
                   <attr name="windowSoftInputMode">   位或运算
                       <flag name = "stateUnspecified" value = "0" />
                       <flag name = "stateUnchanged" value = "1" />
-    4.从xml资源中获取属性：
+4. 从xml资源中获取属性：
+    
         TypeArray array = context.obtainStyledAttributes(attrs, R.styleable.XXXX);
+
 ##属性动画    
 ####插值器
 1. AccelerateDecelerateInterpolator：先加速再减速。
