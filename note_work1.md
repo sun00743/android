@@ -247,20 +247,25 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
     
 ##Socket:
 ####client:
-		Socket clientSocket = new socket("127.0.0.1",8688);
-		//br接收服务器消息
-		BufferReader br = new BufferReader(new InputStreamReader(clientSocket.getInputStream()));
-		String msg = br.readline();
-		if(msg != null){
+		……
+		public void run{
+			……
+			Socket clientSocket = new socket("127.0.0.1",8688);
+			//br接收服务器消息
+			BufferReader br = new BufferReader(new InputStreamReader(clientSocket.getInputStream()));
+			String msg = br.readline();
+			if(msg != null){
 			//handler通知更新ui
-		}
+			}
 		
-		//os向服务器发送消息
-		//PrintWriter mPrintWriter = new PrintWriter(new BufferedWriter(
-                        new OutputStreamWriter(socket.getOutputStream())),true);
-        //mPrintWriter.println("msg from client");
-		OutPutStream os = clientSocket.getOutPutStream;
-		os.write(("something").getType("gbk"));
+			//os向服务器发送消息
+			//PrintWriter mPrintWriter = new PrintWriter(new BufferedWriter(
+            	            new OutputStreamWriter(socket.getOutputStream())),true);
+        	//mPrintWriter.println("msg from client");
+			OutPutStream os = clientSocket.getOutPutStream;
+			os.write(("something").getType("gbk"));
+			……
+		}
 		
 	
 
