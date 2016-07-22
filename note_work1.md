@@ -245,7 +245,23 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 2.onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
 3.descendantFocusability属性，三种模式可分配焦点问题
     
-    
+##Socket:
+####client:
+		Socket clientSocket = new socket("127.0.0.1",8688);
+		//br接收服务器消息
+		BufferReader br = new BufferReader(new InputStreamReader(clientSocket.getInputStream()));
+		String msg = br.readline();
+		if(msg != null){
+			//handler通知更新ui
+		}
+		
+		//os向服务器发送消息
+		//PrintWriter mPrintWriter = new PrintWriter(new BufferedWriter(
+                        new OutputStreamWriter(socket.getOutputStream())),true);
+        //mPrintWriter.println("msg from client");
+		OutPutStream os = clientSocket.getOutPutStream;
+		os.write(("something").getType("gbk"));
+		
 	
 
 
