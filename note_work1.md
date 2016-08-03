@@ -246,6 +246,7 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 3.descendantFocusability属性，三种模式可分配焦点问题
     
 ##Socket:
+通过指定端口和ip来标识网络中的进程
 ####client:
 		……
 		public void run{
