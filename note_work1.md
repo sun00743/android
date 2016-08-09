@@ -1,3 +1,6 @@
+
+- [自定义View](#zidingyiView)
+
 ----mageView 转 Bitmap:
 
 	1.Bitmap image = ((BitmapDrawable)imageView.getDrawable()).getBitmap();  
@@ -74,7 +77,9 @@
         android:numColumns          列数。           关联方法：setNumColumns(int)
         android:stretchMode         缩放模式。       关联方法：setStretchMode(int)
         android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
+<p id="zidingyiView" />
 ##自定义view
+[系列note](#https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)
 1. 想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
 2. xml属性资源文件： res/values/attrs_xxxx.xml 
 
