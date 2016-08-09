@@ -166,8 +166,8 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 2. onBinder方法中返回这个这个binder对象
 
 #####Client:
-1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binder)实例化连接
-2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务。
+1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binde r)实例化连接
+2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务(这是隐式意图，可以通过intent.setPackage()来变为显示意图)。
 3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
 
 #### Binder：
@@ -269,7 +269,28 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 		}
 		
 	
-
+##HTTP:
+####Post:
+		//发送json请求
+		//首先设置requestProperty
+		httpUrlConnection.setRequestProperty("Content-Type","application/json,charset=utf-8");
+		httpUrlConnection.setRequestProperty("Accept","application/json");
+		httpUrlConnection.setRequestMethod("post");
+		//把doOutput设置为true
+		httpUrlConnection.setDoOutput(true);
+		//发送String类型的json数据
+		DataOutPutStream dos = new DataOutPutStream(httpUrlConnection.getOutPutStream());
+		dos.writeBytes(jsonString);
+		//关闭流
+		dos.flush();
+		dos.close();
+		……
+		//接收回复
+		if(httpUrlConnection.getResponseCode() == 200){
+            BufferedReader reader = new BufferedReader(InputStreamReader(httpUrlConnection.getInputStream()));
+            String response = reader.readLine();
+            ……
+        }
 
 
 
