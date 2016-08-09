@@ -79,7 +79,8 @@
         android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
 <p id="zidingyiView" />
 ##自定义view
-[系列note](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)                                                           
+[系列note](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)
+
 1. 想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
 2. xml属性资源文件： res/values/attrs_xxxx.xml 
 
@@ -121,7 +122,7 @@
 
 valueAnimator中ofobject方法，要实现TypeEvaluator，复写evaluate方法</br>
 fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)   
-##bezier曲线
+####bezier曲线
 &nbsp;&nbsp;B(t) = P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*t^2*(1-t) + P3*t^3   
 &nbsp;&nbsp;[具体图以及typeEvaluator示例](http://user.qzone.qq.com/327400482/2)   		
 ##IPC 进程间通讯
