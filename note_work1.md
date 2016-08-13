@@ -52,6 +52,7 @@
 ----设备屏幕密度
 
     density = px/dp;
+    float d = context.getResourse().getDisplayMetrics.denstiy;
     获取屏幕分辨率利用 DisplayMetrics
     DisplayMetrics metrics = new DisplayMetrics();
     getWindowManager.getDefultDisplay.getMetrics;
