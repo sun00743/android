@@ -134,6 +134,7 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 
 ####parcelable：
 通过intent和binder传递
+
 1. writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
 2. private User(Parcel in) 传递CREATOR加载器
 3. public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
@@ -229,6 +230,7 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 		matcher.add(authority(com.con......), path("book"), code(0));
 3. i d q u 注意线程同步
 4. 
+
 ####其他注意：
 #####CopyOrWriteArrayList:<br>
 支持并发读写, 并不是继承自ArrayList, Binder会按照List的规范去访问最后生成一个ArrayList,
