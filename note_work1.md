@@ -83,7 +83,7 @@
 [系列note](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)
 
 1. 想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
-2. xml属性资源文件： res/values/attrs_xxxx.xml 
+2. xml属性资源文件： res/values/attrs_xxxx.xml ; 动画文件：res/anim/anim_name_xml ;
 
                 <res...
                     <declare-styleable name="XXXX">
