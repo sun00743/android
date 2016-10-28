@@ -179,6 +179,9 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
 
 #### Binder：
+[Binder IPC机制的好处](https://www.zhihu.com/question/39440766/answer/89210950)
+
+一个跨进程通讯对象基类，轻量级，高性能，安全，use as a token，在context内部的内部实现并且有高层组件运行。
 #####关于binder死亡代理：
 客户端声明DeathRecipient对象  
     
