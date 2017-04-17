@@ -81,32 +81,34 @@
 
 
 <p id="customView" />
+
 ## 自定义view
+
 [系列note](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)
 
 1. 想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
 2. xml属性资源文件： res/values/attrs_xxxx.xml ; 动画文件：res/anim/anim_name_xml ;
 
-                <res...
-                    <declare-styleable name="XXXX">
-                        <attr name="" format="" />
-                </dec...
+		<res...
+			<declare-styleable name="XXXX">
+			<attr name="" format="" />
+		</dec...
 3. format属性:
     
-    			  reference  引用      @drawable/图片ID
-                  string     字符串    
-                  color      颜色      #00FF00
-                  dimension  尺寸值    25dp/px 
-                  integer    整形
-                  float      浮点型    102.2
-                  fraction   百分比    50%
-                  <attr name="orientation">    枚举  
-                          <enum name="horizontal" value="0" />
-                          <enum name="vertical" value="1" />
-                  </attr>    
-                  <attr name="windowSoftInputMode">   位或运算
-                      <flag name = "stateUnspecified" value = "0" />
-                      <flag name = "stateUnchanged" value = "1" />
+		reference  引用      @drawable/图片ID
+		string     字符串
+		color      颜色      #00FF00
+		dimension  尺寸值    25dp/px 
+		integer    整形
+		float      浮点型    102.2
+		fraction   百分比    50%
+		<attr name="orientation">    枚举  
+			<enum name="horizontal" value="0" />
+			<enum name="vertical" value="1" />
+		</attr>
+		<attr name="windowSoftInputMode">   位或运算
+			<flag name = "stateUnspecified" value = "0" />
+			<flag name = "stateUnchanged" value = "1" />
 4. 从xml资源中获取属性：
     
         TypeArray array = context.obtainStyledAttributes(attrs, R.styleable.XXXX);
