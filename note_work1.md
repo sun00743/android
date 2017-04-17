@@ -1,5 +1,5 @@
 
-- [自定义View](#customView)
+[自定义View](#customView)
 
 ----mageView 转 Bitmap:
 
@@ -82,7 +82,6 @@
 
 <p id="customView" />
 ## 自定义view
-
 [系列note](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)
 
 1. 想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
