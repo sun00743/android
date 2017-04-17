@@ -73,11 +73,12 @@
 ----girdview
 
     Xml属性：
-        android:columnWidth         设置列的宽度。   关联的方法为：setColumnWidth(int)
-        android:horizontalSpacing   两列之间的间距。 关联方法：setHorizontalSpacing(int)
-        android:numColumns          列数。           关联方法：setNumColumns(int)
-        android:stretchMode         缩放模式。       关联方法：setStretchMode(int)
-        android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
+	
+        android:columnWidth         |设置列的宽度     |关联的方法为：setColumnWidth(int)
+        android:horizontalSpacing   |两列之间的间距   |关联方法：setHorizontalSpacing(int)
+        android:numColumns          |列数            |关联方法：setNumColumns(int)
+        android:stretchMode         |缩放模式        |关联方法：setStretchMode(int)
+        android:verticalSpacing     |两行之间的间距   |关联方法：setVerticalSpacing(int)
 
 
 <p id="customView" />
