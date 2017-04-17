@@ -1,5 +1,5 @@
 
-- [自定义View](#zidingyiView)
+- [自定义View](#customView)
 
 ----mageView 转 Bitmap:
 
@@ -80,7 +80,7 @@
         android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
 
 
-
+<p id="customView" />
 ## 自定义view
 
 [系列note](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)
