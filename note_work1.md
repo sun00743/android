@@ -78,8 +78,11 @@
         android:numColumns          列数。           关联方法：setNumColumns(int)
         android:stretchMode         缩放模式。       关联方法：setStretchMode(int)
         android:verticalSpacing     两行之间的间距。 关联方法：setVerticalSpacing(int)
-<p id="zidingyiView" />
-##自定义view
+
+
+
+## 自定义view
+
 [系列note](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/README.md)
 
 1. 想要padding生效，则要在ondraw方法中getpadding，然后在宽度中减去padding的值
@@ -109,8 +112,10 @@
     
         TypeArray array = context.obtainStyledAttributes(attrs, R.styleable.XXXX);
 
-##属性动画    
-####插值器
+## 属性动画    
+
+#### 插值器
+
 1. AccelerateDecelerateInterpolator：先加速再减速。
 2. AccelerateInterpolator：一直加速。
 3. AnticipateInterpolator：先往后一下，再嗖的一声一往无前。
@@ -123,25 +128,30 @@
 
 valueAnimator中ofobject方法，要实现TypeEvaluator，复写evaluate方法</br>
 fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)   
-####bezier曲线
+
+#### bezier曲线
+
 &nbsp;&nbsp;B(t) = P0*(1-t)^3 + 3*P1*t*(1-t)^2 + 3*P2*t^2*(1-t) + P3*t^3   
-&nbsp;&nbsp;[具体图以及typeEvaluator示例](http://user.qzone.qq.com/327400482/2)   		
-##IPC 进程间通讯
-####serializable：
+&nbsp;&nbsp;[具体图以及typeEvaluator示例](http://user.qzone.qq.com/327400482/2)   
+
+## IPC 进程间通讯
+
+#### serializable：
 1. 传递的对象类要实现serialiable接口。
 2. 网络传输并不安全。
 3. objectOutputstream / objectInputStream。
 
-####parcelable：
+#### parcelable：
 通过intent和binder传递
 
 1. writeToparcel(Parcel dest, int flags) flags 几乎所有情况都为0
 2. private User(Parcel in) 传递CREATOR加载器
 3. public static final Parcelable.Creator<User> CREATOR = new P...Crea....;  反序列化由creator完成
 
-####Messenger(单应用)：
+#### Messenger(单应用)：
 底层AIDL 
-#####服务端:
+
+##### 服务端:
 1. 创建一个handler(处理逻辑业务)来创建messenger对象：
 
 		private final Messenger mess = new Messenger(MessengerHandler);
@@ -149,31 +159,31 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 2. onbind方法里 mess.getbinder(); 来绑定
 3. 回复信息：handler中通过 msg.replyTo 方法来获取messenger对象(messenger client = msg.replyTo;) <br>创建一个message.obtain(handler h,int what);<br>通过messenger.send; (client.send(replymessage);)来传递bundle对象
         
-#####客户端：
+##### 客户端：
 1. 创建serivceconnection 和messenger ，创建一个message.obtain(handler h,int what)通过messenger.send来传递bundle对象
     
 	public void onServiceConnected(ComponentName name, IBinder service) {
 		mService = new Messenger(service);
 2. 创建intent 和绑定service	bindService(intent, conn, Context.BIND_AUTO_CREATE);
 3. 接收服务器回复信息；也需要创建接受消息的handler和messenger对象：同服务端，在handler中msg.getData().get...(key);接受信息。
-4. 把接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端
+4. 把接收回复的这个messenger通过msg.replyTo = mGetReplyMessenger传递给服务端。
 
-####AIDL: 
-#####AIDL注意： 
+#### AIDL: 
+##### AIDL注意： 
 实现parcelable的类要在AIDL文件包中(在ＡＳ中这个类要放在gen目录下与aidl文件同一个包中)
 相互间传递参数要在非UI线程中操作
-#####AIDL支持数据类型:
+##### AIDL支持数据类型:
 1. 基本数据类型
 2. String,charsquence
 3. List : Arraylist, ; map: hashmap
 4. 实现parcelable接口的类和对象
 5. AIDL接口
 
-#####Service: 
+##### Service: 
 1. 通过AIDL.stub()方法创建binder对象,在其中实现AIDL中的接口方法
 2. onBinder方法中返回这个这个binder对象
 
-#####Client:
+##### Client:
 1. 创建一个serviceConnection对象，将binder参数通过xxAIDL.stub().asInterface(binde r)实例化连接
 2. 创建 service指定action的intent，以通过bindservice来绑定AIDL服务(这是隐式意图，可以通过intent.setPackage()来变为显示意图)。
 3. 需要把监听回调接口传递到服务端的AIDL则需要在客户端创建一个xxaidl对象 = new xxAidl.stub()
@@ -182,39 +192,40 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 [Binder IPC机制的好处](https://www.zhihu.com/question/39440766/answer/89210950)
 
 一个跨进程通讯对象基类，轻量级，高性能，安全，use as a token，在context内部的内部实现并且有高层组件运行。
-#####关于binder死亡代理：
+##### 关于binder死亡代理：
 客户端声明DeathRecipient对象  
-    
-    private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
-        @override
-        public void binderDied(){
-            if(mBookManager(客户端创建的aidl对象) == null){
-                return;
-            }
-            mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
-            mBookManager = null;
-            //重新绑定service
-            binderservicer(intent, connection, Context.BIND_AUTO_CREATE);
-        }
-    }
+
+	private IBinder.DeathRecipient mDeathRecipient = new IBinder.Death.Recipient(){
+		@override
+		public void binderDied(){
+			if(mBookManager(客户端创建的aidl对象) == null){
+				return;
+			}
+			mBookManager.asBinder().unlinkToDeath(mDeathRecipient, 0);
+			mBookManager = null;
+			//重新绑定service
+			binderservicer(intent, connection, Context.BIND_AUTO_CREATE);
+		}
+	}
 在客户端绑定远程服务后(在serviceConnection中)为binder设置死亡代理  
 	
 	mBookManager = IMessageBoxManager.Stub.asInterfacce(IBinder);
-    IBinder.linkToDeath(mDeathRecipient, 0);
-####Binder链接池:
-#####Service:  
+	IBinder.linkToDeath(mDeathRecipient, 0);
+	
+#### Binder链接池:
+##### Service:  
 1. 创建需要的aidl接口，并完成实现类。
 2. 创建binder连接池的aidl接口Ibinderpool。
 3. 创建bindpoolService，返回Ibinderpool的实现bindpoolImp。  
 
-#####Client:  
+##### Client:  
 (线程中，在bindpool中设置死亡代理)  
 1. 创建binder连接池bindpool来绑定bindpoolService，创建querybinder方法来提供对应的binder。  
 2. MainActivity利用querybinder获取到对应的binder，通过aidl实现类的asInstance(Ibinder)方法实例化链接  
 3. 然后AIDL对象就可以调用方法完成通信。  
 
-####ContentProvider:
-#####Manifest:
+#### ContentProvider:
+##### Manifest:
 1. 声明provider的authority，例如：
 
 		android:authorities="com.contentprovider.demo.book.provider"
@@ -225,7 +236,7 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 3. 为provider新开一个进程。
         android:process=":provider"
 
-#####provider:
+##### provider:
 1. 
 2. UriMatcher 用来将path和code进行关联
 
@@ -234,12 +245,12 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 3. i d q u 注意线程同步
 4. 
 
-####其他注意：
-#####CopyOrWriteArrayList:<br>
+#### 其他注意：
+##### CopyOrWriteArrayList:<br>
 支持并发读写, 并不是继承自ArrayList, Binder会按照List的规范去访问最后生成一个ArrayList,
-#####RemoteCallBackList:<br>
+##### RemoteCallBackList:<br>
 系统专门用于删除跨进程 Listener（接口？）的接口
-#####DbHelper:
+##### DbHelper:
     	private static final String SQL_CREATE_MAIN = "CREATE TABLE " +
     			"main " +                       // Table's name
     			"(" +                           // The columns in the table
@@ -250,16 +261,17 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 		Activity:
  			1. Uri: uri.parse("content://authority/path")
 			2. contentResolver.query(uri,....);   
-##ListView : 
+
+## ListView : 
 1.索引接口：
 
         SectionIndex index = (SectionIndex)adapter;    
 2.onScrollListener的onScroll方法中，可以获取到当前的 firstvisibleItem，visibleItemCount, totalItemCount
 3.descendantFocusability属性，三种模式可分配焦点问题
     
-##Socket:
+## Socket:
 通过指定端口和ip来标识网络中的进程
-####client:
+#### client:
 		……
 		public void run{
 			……
@@ -281,8 +293,8 @@ fraction = startvalue/endvalue ， 随着duration （startvalue -> endvalue)
 		}
 		
 	
-##HTTP:
-####Post:
+## HTTP:
+#### Post:
 		//发送json请求
 		//首先设置requestProperty
 		httpUrlConnection.setRequestProperty("Content-Type","application/json,charset=utf-8");
